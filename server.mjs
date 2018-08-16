@@ -17,18 +17,28 @@ const jsonHeader = {
 }
 
 http.createServer(async (request, response) => {
-  if (request.url.indexOf('/api/login/weixin/img') !== -1) {
-    const wxUUID = await weixinLoginClientHandler.weixinUUID()
-    const r = await weixinLoginClientHandler.weixinQRCodeImgBase64(wxUUID)
-    response.writeHead(200, jsonHeader)
-    response.end(JSON.stringify({
-      status: 1,
-      result: {
-        wxUUID,
-        imgData: r
-      }
-    }))
-  } else if (request.url.indexOf('/api/login/weixin/check') !== -1) {
+  if (request.url === '/api/login/weixin/img') {
+    try {
+      const arg = URL.parse(request.url).query
+      const params = querystring.parse(arg)
+      const wxUUID = await weixinLoginClientHandler.weixinUUID(params.appid, params.redirect_uri)
+      const r = await weixinLoginClientHandler.weixinQRCodeImgBase64(wxUUID)
+      response.writeHead(200, jsonHeader)
+      response.end(JSON.stringify({
+        status: 1,
+        result: {
+          wxUUID,
+          imgData: r
+        }
+      }))
+    } catch (err) {
+      response.writeHead(200, jsonHeader)
+      response.end(JSON.stringify({
+        status: 3,
+        msg: '参数错误'
+      }))
+    }
+  } else if (request.url === '/api/login/weixin/check') {
     if (request.url.split('?') && request.url.split('?').length >= 2) {
       try {
         const arg = URL.parse(request.url).query

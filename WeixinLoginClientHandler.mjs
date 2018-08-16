@@ -64,20 +64,6 @@ export default class WeixinLoginClientHandler {
 
   weixinQRCodeImgBase64 (uuid) {
     return new Promise(async (resolve, reject) => {
-      // const url = URL.parse('https://open.weixin.qq.com/connect/qrcode/' + uuid)
-      // const options = {
-      //   protocol: 'https:',
-      //   port: 443,
-      //   hostname: url.hostname,
-      //   family: 4,
-      //   path: url.pathname + url.search,
-      //   method: 'GET',
-      //   rejectUnauthorized: false,
-      //   // headers: {
-      //   //   'Cache-Control': 'no-cache',
-      //   //   'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3522.0 Safari/537.36'
-      //   // }
-      // }
       const req = https.get('https://open.weixin.qq.com/connect/qrcode/' + uuid, (res) => {
         let chunks = []
         let size = 0
@@ -91,13 +77,6 @@ export default class WeixinLoginClientHandler {
           resolve('data:image/jpeg;base64,' + data.toString('base64'))
         })
       })
-
-      // req.on('error', (e) => {
-      //   console.error(`请求遇到问题: ${e.message}`)
-      //   reject(e)
-      // })
-
-      // req.end()
     })
   }
 
@@ -130,13 +109,12 @@ export default class WeixinLoginClientHandler {
         res.on('end', (err) => {
           if (err) reject(err)
           const result = chunks.toString('utf8')
-          console.log(result)
           try {
             const wxErrCode = result.match(/window.wx_errcode=(\S*);w/)[1]
             switch (parseInt(wxErrCode)) {
               case 405:
                 const wxCode = result.match(/window.wx_code='(\S*)';/)[1]
-                let h = 'https://service.api.desirecore.com/api/weixin/login'
+                let h = this.config.redirect_uri
                 h = h.replace(/&amp;/g, '&')
                 h += (h.indexOf('?') > -1 ? '&' : '?') + 'code=' + wxCode + '&state=' + this.config.state
                 resolve({
@@ -144,7 +122,8 @@ export default class WeixinLoginClientHandler {
                   msg: '登陆成功',
                   result: {
                     code: wxCode,
-                    redirect: h
+                    redirect: h,
+                    state: this.config.state
                   }
                 })
                 break

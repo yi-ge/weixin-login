@@ -4,6 +4,8 @@
 
 解决Chrome70中open.weixin.qq.com腾讯SSL证书不被信任的问题，解决Chrome68中frame跨域被拦截的问题。
 
+最大特点：扫码登录无跳转。
+
 ## 须知
 ES6，Node.js 9，standard规范。
 
