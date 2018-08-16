@@ -17,7 +17,7 @@ const jsonHeader = {
 }
 
 http.createServer(async (request, response) => {
-  if (request.url === '/api/login/weixin/img') {
+  if (/^\/api\/login\/weixin\/img/.test(request.url)) {
     try {
       const arg = URL.parse(request.url).query
       const params = querystring.parse(arg)
@@ -38,7 +38,7 @@ http.createServer(async (request, response) => {
         msg: '参数错误'
       }))
     }
-  } else if (request.url === '/api/login/weixin/check') {
+  } else if (/^\/api\/login\/weixin\/check/.test(request.url)) {
     if (request.url.split('?') && request.url.split('?').length >= 2) {
       try {
         const arg = URL.parse(request.url).query
