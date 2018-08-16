@@ -6,18 +6,22 @@ export default class WeixinLoginClientHandler {
     this.config = Object.assign({}, config)
   }
 
-  get requestURL () {
-    const {
-      appid,
-      redirect_uri, // eslint-disable-line
-      state
-    } = this.config
-    return `https://open.weixin.qq.com/connect/qrconnect?appid=${appid}&scope=snsapi_login&redirect_uri=${encodeURI(redirect_uri)}&state=${state}&login_type=jssdk&self_redirect=default`
+  requestURL (appid, redirect_uri) {
+    if (appid && redirect_uri) {
+      return `https://open.weixin.qq.com/connect/qrconnect?appid=${appid}&scope=snsapi_login&redirect_uri=${encodeURI(redirect_uri)}&state=&login_type=jssdk&self_redirect=default`
+    } else {
+      const {
+        appid,
+        redirect_uri, // eslint-disable-line
+        state
+      } = this.config
+      return `https://open.weixin.qq.com/connect/qrconnect?appid=${appid}&scope=snsapi_login&redirect_uri=${encodeURI(redirect_uri)}&state=${state}&login_type=jssdk&self_redirect=default`
+    }
   }
 
-  weixinUUID () {
+  weixinUUID (appid, redirect_uri) {
     return new Promise((resolve, reject) => {
-      const url = URL.parse(this.requestURL)
+      const url = URL.parse(this.requestURL(appid, redirect_uri))
       const options = {
         protocol: 'https:',
         port: 443,
