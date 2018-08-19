@@ -6,20 +6,19 @@ export default class WeixinLoginClientHandler {
     this.config = Object.assign({}, config)
   }
 
-  requestURL (appid, redirect_uri) {
-    if (appid && redirect_uri) {
+  requestURL (appid, redirect_uri) { // eslint-disable-line
+    if (appid && redirect_uri) { // eslint-disable-line
       return `https://open.weixin.qq.com/connect/qrconnect?appid=${appid}&scope=snsapi_login&redirect_uri=${encodeURI(redirect_uri)}&state=&login_type=jssdk&self_redirect=default`
     } else {
       const {
         appid,
-        redirect_uri, // eslint-disable-line
-        state
+        redirect_uri // eslint-disable-line
       } = this.config
-      return `https://open.weixin.qq.com/connect/qrconnect?appid=${appid}&scope=snsapi_login&redirect_uri=${encodeURI(redirect_uri)}&state=${state}&login_type=jssdk&self_redirect=default`
+      return `https://open.weixin.qq.com/connect/qrconnect?appid=${appid}&scope=snsapi_login&redirect_uri=${encodeURI(redirect_uri)}&state=&login_type=jssdk&self_redirect=default`
     }
   }
 
-  weixinUUID (appid, redirect_uri) {
+  weixinUUID (appid, redirect_uri) { // eslint-disable-line
     return new Promise((resolve, reject) => {
       const url = URL.parse(this.requestURL(appid, redirect_uri))
       const options = {
@@ -68,7 +67,7 @@ export default class WeixinLoginClientHandler {
 
   weixinQRCodeImgBase64 (uuid) {
     return new Promise(async (resolve, reject) => {
-      const req = https.get('https://open.weixin.qq.com/connect/qrcode/' + uuid, (res) => {
+      https.get('https://open.weixin.qq.com/connect/qrcode/' + uuid, (res) => {
         let chunks = []
         let size = 0
         res.on('data', (chunk) => {
@@ -84,11 +83,9 @@ export default class WeixinLoginClientHandler {
     })
   }
 
-  getCode (uuid, d, redirectUri, state) {
+  getCode (uuid, d, redirectUri) {
     return new Promise(async (resolve, reject) => {
-      uuid = uuid
       redirectUri = redirectUri || this.redirect_uri
-      state = state || this.state
       const url = URL.parse('https://long.open.weixin.qq.com/connect/l/qrconnect?uuid=' + uuid + (d ? '&last=' + d : ''))
       const options = {
         protocol: 'https:',
@@ -105,10 +102,8 @@ export default class WeixinLoginClientHandler {
       }
       const req = https.request(options, (res) => {
         let chunks = []
-        let size = 0
         res.on('data', (chunk) => {
           chunks.push(chunk)
-          size += chunk.length
         })
         res.on('end', (err) => {
           if (err) reject(err)
@@ -118,16 +113,11 @@ export default class WeixinLoginClientHandler {
             switch (parseInt(wxErrCode)) {
               case 405:
                 const wxCode = result.match(/window.wx_code='(\S*)';/)[1]
-                let h = this.config.redirect_uri
-                h = h.replace(/&amp;/g, '&')
-                h += (h.indexOf('?') > -1 ? '&' : '?') + 'code=' + wxCode + '&state=' + this.config.state
                 resolve({
                   status: 405,
                   msg: '登陆成功',
                   result: {
-                    code: wxCode,
-                    redirect: h,
-                    state: this.config.state
+                    code: wxCode
                   }
                 })
                 break
