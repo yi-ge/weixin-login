@@ -6,6 +6,8 @@
 
 `最大特点`：**扫码登录无跳转**🤠。
 
+`demo`：[https://weixin.openapi.site/demo](https://weixin.openapi.site/demo)
+
 ## 须知
 仅适用于`微信开放平台`-`网站应用`。ES6，Node.js 9，standard规范。
 
@@ -19,6 +21,15 @@
 第三步：获取微信服务器返回的Code（[详见微信开放平台文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN)）。  
 
 ## 测试方法
+
+### 在线测试
+直接请求`https://weixin.openapi.site/img?appid=您的appid&redirect_uri=您在微信开放平台后台设置的跳转域名`，获取二维码和UUID。  
+
+再次请求`https://weixin.openapi.site/check?uuid=上一步得到的UUID`，获得登录结果的数据。  
+
+您要是懒得部署一套，可以直接使用以上地址。
+
+### 本地测试
 先阅读源码，修改`server.mjs`里面的配置信息，然后类似以下的方法执行。  
 `node --experimental-modules server.mjs`
 
