@@ -77,8 +77,18 @@ http.createServer(async (request, response) => {
 <body>
   <img id="qrcode" src="" />
   <h1 id="code"></h1>
+  <p style="font-weight: 600">使用您的应用测试？</p>
+  <p>您的AppID：<input type="text" id="appid" /></p>
+  <p>开放平台设置的授权回调域(以http/https开头)：<input type="text" id="redirectUri" /></p>
+  <p><input type="button" value="测试" id="test" /></p>
   <script src="https://cdn.staticfile.org/jquery/3.3.1/jquery.min.js"></script>
   <script>
+    function GetQueryString(name) {
+      var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+      var r = window.location.search.substr(1).match(reg);
+      if(r!=null)return unescape(r[2]); return '';
+    }
+
     $(function () {
       var getCode = function (uuid, last) {
         $.ajax({
@@ -115,7 +125,7 @@ http.createServer(async (request, response) => {
       var getUUID = function (uuid) {
         $.ajax({
           type: "GET",
-          url: "http://localhost:8033/api/login/weixin/img",
+          url: "http://localhost:8033/api/login/weixin/img?appid=" + GetQueryString("appid") + "&redirect_uri=" + GetQueryString("redirect_uri"),
           dataType: "json",
           cache: !1,
           timeout: 6e4,
@@ -137,6 +147,13 @@ http.createServer(async (request, response) => {
           }
         })
       }
+
+      $("#appid").val(GetQueryString("appid"))
+      $("#redirectUri").val(GetQueryString("redirect_uri"))
+
+      $("#test").click(function () {
+        window.location.href = window.location.origin + "/login/weixin/demo?appid=" + $("#appid").val() + "&redirect_uri=" + $("#redirectUri").val();
+      })
 
       getUUID()
     });
