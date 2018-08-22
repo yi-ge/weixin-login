@@ -74,3 +74,7 @@ weixinLoginClientHandler.weixinQRCodeImgURL().then(r => console.log(r))
 4. 该文件使用原生Node.js方法，ES6写法，直接复制`WeixinLoginClientHandler.mjs`文件到你的ES6项目并改后缀为`js`，然后可自由发挥。  
 5. 理论上你可以模拟任何网站的二维码，但是没有私钥就算拿到code也没有用。  
 6. `Node.js v10.5+`使用PM2配置`node_args: '--experimental-modules'`会有报错，需要`npm i esm`，然后配置`node_args: '-r esm'`。
+
+## 其它语言版本
+
+[PHP](https://github.com/yi-ge/weixin-login-php)
