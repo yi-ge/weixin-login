@@ -2,7 +2,7 @@
 
 微信开放平台扫码登陆解析处理工具😊，将frame数据处理为图片或Base64图片数据返回客户端进行扫码。
 
-解决Chrome70中open.weixin.qq.com腾讯SSL证书不被信任的问题，解决Chrome68中frame跨域被拦截的问题。
+~~解决Chrome70中open.weixin.qq.com腾讯SSL证书不被信任的问题~~(微信官方于2018年8月23日更换了域名证书)，解决Chrome68中frame跨域被拦截的问题。
 
 `最大特点`：**扫码登录无跳转**🤠。
 
