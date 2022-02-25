@@ -1,7 +1,7 @@
 import http from 'http'
 import URL from 'url'
 import querystring from 'querystring'
-import WeixinLoginClientHandler from './WeixinLoginClientHandler'
+import WeixinLoginClientHandler from './WeixinLoginClientHandler.js'
 
 const weixinLoginClientHandler = new WeixinLoginClientHandler({
   appid: 'wx827225356b689e24',
@@ -168,4 +168,4 @@ http.createServer(async (request, response) => {
   }
 }).listen(8033)
 
-console.log('服务器已启动-8033')
+console.log('服务器已启动: 8033')

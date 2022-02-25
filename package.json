@@ -1,0 +1,12 @@
+{
+  "name": "weixin-login",
+  "version": "1.0.0",
+  "main": "main.js",
+  "repository": "git@github.com:yi-ge/weixin-login.git",
+  "author": "yi-ge <a@wyr.me>",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

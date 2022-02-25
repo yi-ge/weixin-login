@@ -8,6 +8,12 @@
 
 `demo`：[https://weixin.openapi.site/demo](https://weixin.openapi.site/demo)
 
+## 相关博文
+
+最新说明以博文为准。
+
+[无刷新微信扫码登陆解决方案](https://www.wyr.me/post/590)
+
 ## 须知
 仅适用于`微信开放平台`-`网站应用`。ES6，Node.js 9+，standard规范。
 
@@ -79,6 +85,4 @@ weixinLoginClientHandler.weixinQRCodeImgURL().then(r => console.log(r))
 
 [PHP](https://github.com/yi-ge/weixin-login-php)
 
-## 相关博文
 
-[无刷新微信扫码登陆解决方案](https://www.wyr.me/post/590)
