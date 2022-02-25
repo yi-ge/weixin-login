@@ -2,7 +2,7 @@ import https from 'https'
 import URL from 'url'
 
 export default class WeixinLoginClientHandler {
-  constructor (config) {
+  constructor(config) {
     this.config = Object.assign({}, config)
   }
 
@@ -44,7 +44,7 @@ export default class WeixinLoginClientHandler {
           if (err) reject(err)
           const html = chunks.toString('utf8')
           try {
-            resolve(html.match(/src="\/connect\/qrcode\/(\S*)" \/>/)[1])
+            resolve(html.match(/src="\/connect\/qrcode\/(\S*)"/)[1])
           } catch (err) {
             reject(err)
           }
@@ -86,7 +86,7 @@ export default class WeixinLoginClientHandler {
   getCode (uuid, d, redirectUri) {
     return new Promise(async (resolve, reject) => {
       redirectUri = redirectUri || this.redirect_uri
-      const url = URL.parse('https://long.open.weixin.qq.com/connect/l/qrconnect?uuid=' + uuid + (d ? '&last=' + d : ''))
+      const url = URL.parse('https://lp.open.weixin.qq.com/connect/l/qrconnect?uuid=' + uuid + (d ? '&last=' + d : ''))
       const options = {
         protocol: 'https:',
         port: 443,
