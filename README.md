@@ -15,13 +15,16 @@
 [无刷新微信扫码登陆解决方案](https://www.wyr.me/post/590)
 
 ## 须知
-仅适用于`微信开放平台`-`网站应用`。ES6，Node.js 9+，standard规范。
 
-#### 为什么不封为NPM库？
+仅适用于`微信开放平台`-`网站应用`。
+
+### 为什么不封为NPM库？
+
 这个功能的代码比较简单，https和URL库都是nodejs自带的，直接复制过去用就好了。
 
 ## 使用方法
-阅`WeixinLoginClientHandler.mjs`文件。  
+
+阅`WeixinLoginClientHandler.js`文件。  
 第一步：获取微信UUID；  
 第二步：根据微信UUID获取二维码图片；  
 第三步：获取微信服务器返回的Code（[详见微信开放平台文档](https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&id=open1419316505&token=&lang=zh_CN)）。  
@@ -29,6 +32,7 @@
 ## 测试方法
 
 ### 在线测试
+
 直接请求`https://weixin.openapi.site/img?appid=您的appid&redirect_uri=您在微信开放平台后台设置的授权回调域`，获取二维码和UUID。  
 
 再次请求`https://weixin.openapi.site/check?uuid=上一步得到的UUID`，获得登录结果的数据。  
@@ -36,10 +40,14 @@
 您要是懒得部署一套，可以直接使用以上地址。
 
 ### 本地测试
-先阅读源码，修改`server.mjs`里面的配置信息，然后类似以下的方法执行。  
-`node --experimental-modules server.mjs`
 
-访问`http://localhost:8033/login/weixin/demo`即可进行测试。
+先阅读源码，修改`server.js`里面的配置信息，然后执行：
+
+```bash
+npm start
+```
+
+访问`http://localhost:65533/demo`即可进行测试。
 
 ### API
 
@@ -77,12 +85,9 @@ weixinLoginClientHandler.weixinQRCodeImgURL().then(r => console.log(r))
 1. 如果您看不懂此项目文件的代码内容，请弃用此方案（😂这可能说明您并不需要使用该方案，这个方案可能只适合少部分应用）。  
 2. 使用此方法，无需经由服务器端跳转，可以直接获得code。如果是Electron环境，可以直接在渲染进程请求。  
 3. 建议为该功能单独部署，可在您所有项目中使用同一个接口。PHP版本方便部署到虚拟主机等免维护环境，简单方便。
-4. 该文件使用原生Node.js方法，ES6写法，直接复制`WeixinLoginClientHandler.mjs`文件到你的ES6项目并改后缀为`js`，然后可自由发挥。  
+4. 该文件使用原生Node.js方法，ES6写法，直接复制`WeixinLoginClientHandler.js`文件到你的项目即可。  
 5. 理论上你可以模拟任何网站的二维码，但是没有私钥就算拿到code也没有用。  
-6. `Node.js v10.5+`使用PM2配置`node_args: '--experimental-modules'`会有报错，需要`npm i esm`，然后配置`node_args: '-r esm'`。
 
 ## 其它语言版本
 
 [PHP](https://github.com/yi-ge/weixin-login-php)
-
-

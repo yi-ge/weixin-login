@@ -61,7 +61,7 @@ http.createServer(async (request, response) => {
         msg: '缺少必须参数'
       }))
     }
-  } else if (/^\/login\/weixin\/demo/.test(request.url)) {
+  } else if (/^\/demo/.test(request.url)) {
     response.writeHead(200, { 'Content-Type': 'text/html' })
     response.end(`
 <!DOCTYPE html>
@@ -93,7 +93,7 @@ http.createServer(async (request, response) => {
       var getCode = function (uuid, last) {
         $.ajax({
           type: "GET",
-          url: "http://localhost:8033/api/login/weixin/check?uuid=" + uuid + (last ? '&last=' + last : ''),
+          url: "/api/login/weixin/check?uuid=" + uuid + (last ? '&last=' + last : ''),
           dataType: "json",
           cache: !1,
           timeout: 6e4,
@@ -125,7 +125,7 @@ http.createServer(async (request, response) => {
       var getUUID = function (uuid) {
         $.ajax({
           type: "GET",
-          url: "http://localhost:8033/api/login/weixin/img?appid=" + GetQueryString("appid") + "&redirect_uri=" + GetQueryString("redirect_uri"),
+          url: "/api/login/weixin/img?appid=" + GetQueryString("appid") + "&redirect_uri=" + GetQueryString("redirect_uri"),
           dataType: "json",
           cache: !1,
           timeout: 6e4,
@@ -152,7 +152,7 @@ http.createServer(async (request, response) => {
       $("#redirectUri").val(GetQueryString("redirect_uri"))
 
       $("#test").click(function () {
-        window.location.href = window.location.origin + "/login/weixin/demo?appid=" + $("#appid").val() + "&redirect_uri=" + $("#redirectUri").val();
+        window.location.href = window.location.origin + "/demo?appid=" + $("#appid").val() + "&redirect_uri=" + $("#redirectUri").val();
       })
 
       getUUID()
@@ -166,6 +166,6 @@ http.createServer(async (request, response) => {
     })
     response.end('404\n')
   }
-}).listen(8033)
+}).listen(65533)
 
-console.log('服务器已启动: 8033')
+console.log('服务器已启动: 65533')

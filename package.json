@@ -1,6 +1,6 @@
 {
   "name": "weixin-login",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "main.js",
   "repository": "git@github.com:yi-ge/weixin-login.git",
   "author": "yi-ge <a@wyr.me>",
@@ -8,5 +8,8 @@
   "type": "module",
   "scripts": {
     "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=18.15.0"
   }
 }
